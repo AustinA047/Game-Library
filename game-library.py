@@ -399,7 +399,22 @@ def search_by_price():
         print("*** NO MATCHES FOUND!***\n")
     
 def remove_game():
-    print("\nRemove game is running")
+    for key in games.keys():
+        print(key, "-", games[key][1])    
+    selected_key = input("What is the game you would like to remove")
+    selected_key = int(selected_key)    
+    if selected_key in games.keys():
+        try:
+            for keys in range(1, len(games)+1):
+                if keys>= selected_key and keys != len(games):
+                    games[keys] = games[keys+1]
+                    if keys == len(games):
+                        games.pop(keys)
+        except:
+            print("Error message")
+    else:
+        print("error message jeded")
+    
     
 def save_data():
     datafile = open("game_lib.pickle", "wb")
@@ -408,7 +423,15 @@ def save_data():
     print("File Saved")
     
 def quit():
-    print("\nQuit is running")
+    choice = input("Would you like to save?: ")
+    if choice == "yes":
+        save_data()
+    elif choice == "no":
+        pickle_file = open("datafile.pickle", "wb")
+        pickle.dump(games, pickle_file)
+        pickle_file.close()
+    else:
+        print("*** NOT A VALID CHOICE ***\n")    
     
 def search():
     print('''
